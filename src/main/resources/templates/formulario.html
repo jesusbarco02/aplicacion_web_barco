@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+		integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<link href="../static/css/css.css" th:href="@{/css/css.css}" rel="stylesheet" />
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+
+
+</head>
+
+<body id="formulario">
+
+
+    <!-- Page Content  -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+		<div class="container-fluid text-light">
+
+
+			<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<i class="fas fa-align-justify"></i>
+			</button>
+			<div id="titulo1">
+				<h3>BIKESHOP</h3>
+			</div>
+            <img src="img/imgFormulario.png" th:src="@{/img/imgFormulario.png}" alt="">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a id="inicio" class="nav-link text-muted mr-4" href="index.html" th:href="@{/}">Inicio</a>
+					</li>
+
+
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="post" action="#" name="form" th:action="@{/agregarBicicleta/submit}" th:object="${bicicleta}"> 		
+        <div class="container register">
+            <div class="row">
+                <div class="col-md-3 register-left justify-content-center">
+                    <img src="../static/img/imgFormulario.png" th:src="@{/img/imgFormulario.png}" />
+                    <h3>BIKESHOP</h3>
+                </div>
+                <div class="col-md-9 register-right">
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  
+                            <div class="row register-form">
+                                <div class="col-md-6">
+                                <input type="hidden" th:field="*{id}" id="id" />
+                                    <div class="form-group">
+                                        <label for="fabricante"  class="label">Fabricante</label><br/>
+                                        <input type="text" id="fabricante" name="fabricante" class="form-control" placeholder="Fabricante" value="" th:field="*{fabricante}" />
+                                   		<span class="error" id="errorFabricante"></span>
+                                    </div>
+                                    <div class="form-group" id="material">
+                                        <label for="material"  class="label">Material</label>
+                                        <input type="text" id="material" class="form-control" name="material" placeholder="Alumnio/Carbono" value="" th:field="*{material}" />
+                                   		<span class="error" id="errorMaterial"></span>
+                                    
+                                    </div>
+                                    <div class="form-group" id="modeloManillar">
+                                        <label for="manillar"  class="label">Modelo de manillar</label>
+                                        <input type="text" id="manillar" name="manillar" class="form-control" placeholder="Modelo de manillar" value=""  th:field="*{modeloManillar}"/>
+                                    	<span class="error" id="errorManillar"></span>
+                                    </div>
+                                    <div class="form-group">
+										<label class="label" id="genero">Género</label>
+                                        <div class="maxl" th:each="genero : ${generos}">
+                                            <input type="radio" name="genero" value="masculino" th:field="*{genero}" th:value="${genero}" >
+                                            <label for="genero" class="radio inline" th:for="${#ids.prev('genero')}" th:text="${genero}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+										<label class="label" id="imagen" for="imagen">URL de la imagen</label> <input type="url"
+											class="form-control" id="imagen" placeholder="http://..."
+										th:field="*{imagen}">
+										<span class="error" id="errorImagen"></span>
+
+									</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="label" id="modeloBicicleta">Modelo</label><br/>
+                                        <input type="text" id="modelo" class="form-control" placeholder="Modelo" value="" th:field="*{modeloBicicleta}" />
+                                    	<span class="error" id="errorModelo"></span>
+                                    </div>
+                                    <div class="form-group" id="peso">
+                                        <label for="peso" class="label">Peso</label>
+                                        <input type="number" id="peso" minlength="10" maxlength="10" name="peso" class="form-control" placeholder="00.00" value="" th:field="*{peso}"/>
+                                    	<span class="error" id="errorPeso"></span>
+                                    </div>
+                                    <div class="form-group" id="categoria">
+                                        <label class="label">Tipo de bicicleta</label>
+                                        <select class="form-control" th:field="*{categoria}">
+                                            <option class="hidden" value="-1" selected disabled>Seleccione su categoría</option>
+                                            <option th:each="categoria : ${categorias}"
+												th:value="${categoria.id}" th:text="${categoria.tipo}"></option>
+  
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="tamRueda">
+                                        <label class="label">Tamaño de rueda</label>
+                                        <select class="form-control" th:field="*{tamRueda}">
+                                            <option class="hidden" value="-1" selected disabled>Seleccione el tamaño de la rueda</option>
+                                            <option th:each="tamRueda : ${tamanios}"
+												th:value="${tamRueda}" th:text="${tamRueda}" >18"</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+										<label for="descripcion">Descripción</label>
+										<textarea class="form-control" id="descripcion"
+											placeholder="Descripción" rows="2" th:field="*{descripcion}">ç
+										</textarea>
+									</div>
+
+                                    <div class="form-group" id="precio">
+                                        <label class="label">Precio</label><br/>
+                                        <input type="number" id="precio" class="form-control"  value="precio" th:field="*{precio}" />
+                                    </div>
+                                    <input type="submit" class="btnRegister"  value="Añadir bicicleta" />
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+	</form>
+    <script>
+
+        function capturarEvento(e){
+ 
+        e = e || window.event; 
+        console.log(e);
+ 
+        }
+        window.addEventListener("load",function(){
+            document.form.addEventListener("submit",validarFormulario);
+            window.form.nombre.addEventListener("input",function(){
+                document.getElementById("error").innerHTML= "";
+            })
+    
+        });		
+ 
+        function validarFormulario(e){
+            e = e || window.event;
+            if(window.form.fabricante.value==""){
+                e.preventDefault();
+                document.getElementById("errorFabricante").innerHTML= "Debes rellenar el campo";
+                document.getElementById("errorFabricante").setAttribute("style","color:red;");
+            }
+            if(window.form.material.value==""){
+                e.preventDefault();
+                document.getElementById("errorMaterial").innerHTML= "Debes rellenar el campo";
+                document.getElementById("errorMaterial").setAttribute("style","color:red;");
+            }
+    		if(window.form.manillar.value==""){
+                e.preventDefault();
+                document.getElementById("errorManillar").innerHTML= "Debes rellenar el campo";
+                document.getElementById("errorManillar").setAttribute("style","color:red;");
+            }
+    		if(window.form.modelo.value==""){
+                e.preventDefault();
+                document.getElementById("errorModelo").innerHTML= "Debes rellenar el campo";
+                document.getElementById("errorModelo").setAttribute("style","color:red;");
+            }
+            if(window.form.imagen.value==""){
+                e.preventDefault();
+                document.getElementById("errorImagen").innerHTML= "Debes rellenar el campo";
+                document.getElementById("errorImagen").setAttribute("style","color:red;");
+            }             			
+        }   
+    </script> 
+
+</body>
+
+</html>
